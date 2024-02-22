@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta name="description" content="Para que o big saiba quanto está me devendo" />
+    <meta charset="utf-8">
+    <title>Quanto o big me deve até hoje?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+  </head>
+  <style>
+    @font-face {
+        font-family: 'Roboto Condensed';
+        font-style: italic;
+        font-weight: 700;
+        src: url(https://fonts.gstatic.com/s/robotocondensed/v27/ieVW2ZhZI2eCN5jzbjEETS9weq8-19ehAyvMum7nfDB64f8N1X5pKQ.ttf) format('truetype');
+    }
+    body {
+        background-image: url("https://media-gru2-2.cdn.whatsapp.net/v/t61.24694-24/375621732_1431712380944178_2427687274008505364_n.jpg?ccb=11-4&oh=01_AdTHnXXXmotrSxVUAo1A8DbiEdWsTvkPYM5gqEZKEat1VA&oe=65E47BF1&_nc_sid=e6ed6c&_nc_cat=105");
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+        background-position: center top;
+        background-attachment: fixed;
+    }
+    .container {
+        
+    }
+    #countdown {
+        font-family: 'Roboto Condensed', sans-serif;
+        width: 600px;
+        height: 100px;
+         /* Center vertically and horizontally */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: -50px;
+        margin-top: -50px;
+        color: black;
+        font-size: 5em;
+        text-align: center;
+        font-weight: bold;
+        font-style: italic;
+        -webkit-opacity: 1;
+        -moz-opacity: 1;
+        opacity: 1;
+        -webkit-transition: opacity 0.4s ease;
+        -moz-transition: opacity 0.4s ease;
+        -ms-transition: opacity 0.4s ease;
+        -o-transition: opacity 0.4s ease;
+        /* solve for flicker problem */
+        -webkit-perspective: 1000;
+        -webkit-backface-visibility: hidden;
+    }
+    #countdown.puffer {
+        -webkit-opacity: 0;
+        -moz-opacity: 0;
+        opacity: 0;
+        -webkit-transform: scale(1.6, 1.6);
+        -moz-transform: scale(1.6, 1.6);
+        -ms-transform: scale(1.6, 1.6);
+        -o-transform: scale(1.6, 1.6);
+        -webkit-transition: all 0.4s ease-out;
+        -moz-transition: all 0.4s ease-out;
+        -ms-transition: all 0.4s ease-out;
+        -o-transition: all 0.4s ease-out;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    Number.prototype.formatMoney = function(c, d, t) {
+        var n = this,
+            c = isNaN((c = Math.abs(c))) ? 2 : c,
+            d = d == undefined ? "." : d,
+            t = t == undefined ? "," : t,
+            s = n < 0 ? "-" : "",
+            i = String(parseInt((n = Math.abs(Number(n) || 0).toFixed(c)))),
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return (
+            s +
+            (j ? i.substr(0, j) + t : "") +
+            i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) +
+            (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "")
+        );
+    };
 
+    function addClassDelayed(jqObj, c, to) {    
+        setTimeout(function() { jqObj.addClass(c); }, to);
+    }
+
+    function anim() { 
+        rightNow = new Date();
+        since = new Date("Nov 11, 2022 00:00:00 UTC");
+        difference = rightNow - since;
+        amtPerSecond = (1 * (difference / 1000)).formatMoney(2);
+        // addClassDelayed($("#countdown"), "puffer", 600);
+        $("#countdown").html("R$ " + amtPerSecond);
+        $('#countdown').removeClass("puffer");
+    }
+        
+    window.onload = function() {
+        anim();
+        self.setInterval(function(){anim()},1325);
+    };
+  </script>
+  <body>
+    <div class="container">
+        <div id="countdown"></div>
+    </div>
+  </body>
+</html>
